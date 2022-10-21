@@ -1,4 +1,4 @@
-package com.yurykasper.photomap
+package com.yurykasper.photomap.auth.sign_up
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "399328190664",
+    "project_id": "photomap-cc449",
+    "storage_bucket": "photomap-cc449.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399328190664:android:097fcb2a1af6c93ae6c5fd",
+        "android_client_info": {
+          "package_name": "com.yurykasper.photomap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "399328190664-0r9n44v5su37b1tp3p3u00itsi5pp1ov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yurykasper.photomap",
+            "certificate_hash": "12634030468ae5a5b8e8c0a25e9af4936cc45fff"
+          }
+        },
+        {
+          "client_id": "399328190664-09u8a38atn20kn4mqdne277o0h8ebhcb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrn8QLT2-Y7US8P5d3zNfTp-CNfpy15kU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "399328190664-09u8a38atn20kn4mqdne277o0h8ebhcb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
