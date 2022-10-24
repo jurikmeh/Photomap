@@ -8,30 +8,30 @@
 
 
     <TextView
-        android:id="@+id/usernameLabel"
+        android:id="@+id/emailLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="5dp"
-        android:text="Username"
+        android:text="Email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/usernameTextInputLayout"
+        android:id="@+id/emailTextInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
-        android:hint="Username"
+        android:hint="Email"
         app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/usernameLabel"
-        app:layout_constraintTop_toBottomOf="@+id/usernameLabel">
+        app:layout_constraintStart_toStartOf="@+id/emailLabel"
+        app:layout_constraintTop_toBottomOf="@+id/emailLabel">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/usernameTextInputEditText"
+            android:id="@+id/emailTextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
@@ -44,8 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Password"
-        app:layout_constraintStart_toStartOf="@+id/usernameTextInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/usernameTextInputLayout" />
+        app:layout_constraintStart_toStartOf="@+id/emailTextInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextInputLayout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordTextInputLayout"

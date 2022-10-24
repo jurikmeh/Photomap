@@ -1,18 +1,19 @@
 package com.yurykasper.photomap.auth.sign_in
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.yurykasper.photomap.R
 import com.yurykasper.photomap.databinding.FragmentLoginBinding
 import com.yurykasper.photomap.extensions.afterTextChanged
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.rxkotlin.subscribeBy
 
 class LoginFragment : Fragment() {
 
@@ -31,12 +32,26 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.signupButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registrationFragment)
+
+        binding.emailTextInputEditText.afterTextChanged { text -> viewModel.inputs.emailChanged(text) }
+        binding.passwordTextInputEditText.afterTextChanged { text -> viewModel.inputs.passwordChanged(text) }
+
+        binding.loginButton.setOnClickListener {
+            if (viewModel.inputs.loginButtonPressed()) {
+                findNavController().navigate(R.id.action_loginFragment_to_tabsFragment)
+            } else {
+                Toast.makeText(requireContext(), "Invalid email or password", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        binding.usernameTextInputEditText.afterTextChanged { text -> viewModel.usernameChanged(text) }
-        binding.passwordTextInputEditText.afterTextChanged { text -> viewModel.passwordChanged(text) }
+        binding.signupButton.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
+        }
+
+        viewModel.outputs.loginButtonEnabled
+            .subscribeBy { isEnabled ->
+                binding.loginButton.isEnabled = isEnabled
+            }.addTo(disposables)
     }
 
     companion object {
