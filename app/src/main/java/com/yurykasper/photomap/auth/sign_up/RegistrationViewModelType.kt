@@ -1,5 +1,6 @@
 package com.yurykasper.photomap.auth.sign_up
 
+import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
 interface RegistrationViewModelInput {
@@ -14,6 +15,7 @@ interface RegistrationViewModelInput {
 
 interface RegistrationViewModelOutput {
     val registrationButtonEnabled: BehaviorSubject<Boolean>
+    val showMainFragment: Observable<Boolean>
 }
 
 interface RegistrationViewModelType: RegistrationViewModelInput, RegistrationViewModelOutput {

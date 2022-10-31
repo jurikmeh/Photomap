@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import com.yurykasper.photomap.R
 import com.yurykasper.photomap.databinding.FragmentRegistrationBinding
 import com.yurykasper.photomap.extensions.afterTextChanged
 import io.reactivex.disposables.CompositeDisposable
@@ -35,12 +38,22 @@ class RegistrationFragment : Fragment() {
         binding.lastnameTextInputEditText.afterTextChanged { viewModel.inputs.lastNameChanged(it) }
         binding.phoneTextInputEditText.afterTextChanged { viewModel.inputs.phoneChanged(it) }
 
+        binding.registrationButton.setOnClickListener { viewModel.inputs.registrationButtonPressed() }
+
         viewModel.outputs.registrationButtonEnabled
             .subscribeBy { isEnabled ->
                 binding.registrationButton.isEnabled = isEnabled
             }.addTo(disposables)
 
-        binding.registrationButton.setOnClickListener { viewModel.inputs.registrationButtonPressed() }
+        viewModel.outputs.showMainFragment
+            .subscribeBy {
+                if (it) {
+                    findNavController().navigate(R.id.action_registrationFragment_to_tabsFragment)
+                } else {
+                    Toast.makeText(requireContext(), "Invalid input data", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addTo(disposables)
     }
 
     companion object {

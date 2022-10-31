@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.yurykasper.photomap.R
 import com.yurykasper.photomap.databinding.FragmentLoginBinding
@@ -37,11 +36,7 @@ class LoginFragment : Fragment() {
         binding.passwordTextInputEditText.afterTextChanged { text -> viewModel.inputs.passwordChanged(text) }
 
         binding.loginButton.setOnClickListener {
-            if (viewModel.inputs.loginButtonPressed()) {
-                findNavController().navigate(R.id.action_loginFragment_to_tabsFragment)
-            } else {
-                Toast.makeText(requireContext(), "Invalid email or password", Toast.LENGTH_SHORT).show()
-            }
+            viewModel.inputs.loginButtonPressed()
         }
 
         binding.signupButton.setOnClickListener {
@@ -51,6 +46,15 @@ class LoginFragment : Fragment() {
         viewModel.outputs.loginButtonEnabled
             .subscribeBy { isEnabled ->
                 binding.loginButton.isEnabled = isEnabled
+            }.addTo(disposables)
+
+        viewModel.outputs.showMainFragment
+            .subscribeBy {
+                if (it) {
+                    findNavController().navigate(R.id.action_loginFragment_to_tabsFragment)
+                } else {
+                    Toast.makeText(requireContext(), "Invalid email or password", Toast.LENGTH_SHORT).show()
+                }
             }.addTo(disposables)
     }
 
