@@ -37,7 +37,6 @@ class TimelineFragment : Fragment() {
 
     private fun setupRecyclerView() = with(binding) {
         adapter = TimelineAdapter()
-        timelineRecyclerView.setBackgroundColor(Color.parseColor("#4f7635"))
         timelineRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         timelineRecyclerView.adapter = adapter
         val list = listOf(
@@ -51,7 +50,6 @@ class TimelineFragment : Fragment() {
                 Location("")
             )
         )
-        adapter.submitList(list)
-//        adapter.notifyDataSetChanged()
+        adapter.refresh(list)
     }
 }
