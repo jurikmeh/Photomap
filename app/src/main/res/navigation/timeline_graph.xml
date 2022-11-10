@@ -9,5 +9,18 @@
         android:id="@+id/timelineFragment"
         android:name="com.yurykasper.photomap.main.timeline.TimelineFragment"
         android:label="fragment_timeline"
-        tools:layout="@layout/fragment_timeline" />
+        tools:layout="@layout/fragment_timeline" >
+        <action
+            android:id="@+id/action_timelineFragment_to_photoDetailsFragment"
+            app:destination="@id/photoDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoDetailsFragment"
+        android:name="com.yurykasper.photomap.main.photoDetails.PhotoDetailsFragment"
+        android:label="fragment_photo_details"
+        tools:layout="@layout/fragment_photo_details" >
+        <argument
+            android:name="photo"
+            app:argType="com.yurykasper.photomap.models.PhotoDTO" />
+    </fragment>
 </navigation>

@@ -1,12 +1,12 @@
 package com.yurykasper.photomap.main.timeline
 
-import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yurykasper.photomap.databinding.FragmentTimelineBinding
 import com.yurykasper.photomap.models.PhotoDTO
@@ -36,7 +36,13 @@ class TimelineFragment : Fragment() {
     }
 
     private fun setupRecyclerView() = with(binding) {
-        adapter = TimelineAdapter()
+        adapter = TimelineAdapter(object: RecyclerOnTouchListener {
+            override fun onPhotoDetails(photo: PhotoDTO) {
+                val direction = TimelineFragmentDirections.actionTimelineFragmentToPhotoDetailsFragment(photo)
+                findNavController().navigate(direction)
+            }
+        })
+
         timelineRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         timelineRecyclerView.adapter = adapter
         val list = listOf(

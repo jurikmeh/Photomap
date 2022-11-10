@@ -11,4 +11,4 @@ data class PhotoDTO(
     val authorId: String,
     val photoURLs: List<String>,
     val location: Location
-)
+): java.io.Serializable
