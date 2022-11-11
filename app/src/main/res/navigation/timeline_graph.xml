@@ -21,6 +21,6 @@
         tools:layout="@layout/fragment_photo_details" >
         <argument
             android:name="photo"
-            app:argType="com.yurykasper.photomap.models.PhotoDTO" />
+            app:argType="com.yurykasper.photomap.models.photo.PhotoDVO" />
     </fragment>
 </navigation>

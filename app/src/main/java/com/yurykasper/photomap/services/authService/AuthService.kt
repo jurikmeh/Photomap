@@ -33,13 +33,17 @@ class AuthService: AuthServiceType {
                 .addOnSuccessListener {
                     val user = hashMapOf(
                         "email" to email,
-                        "password" to password,
                         "firstname" to firstname,
                         "lastname" to lastname,
                         "phone" to "+${phone}"
                     )
-                    FirebaseFirestore.getInstance().collection("users").add(user)
-                    observer.onNext(true)
+                    val userUid = it.user?.uid
+                    if (userUid != null) {
+                        FirebaseFirestore.getInstance().collection("users").document(userUid).set(user)
+                        observer.onNext(true)
+                    } else {
+                        observer.onNext(false)
+                    }
                 }
         }
     }

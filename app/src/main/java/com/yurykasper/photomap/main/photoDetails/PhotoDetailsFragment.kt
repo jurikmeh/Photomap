@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
+import com.google.firebase.auth.FirebaseAuth
 import com.yurykasper.photomap.databinding.FragmentPhotoDetailsBinding
 
 class PhotoDetailsFragment : Fragment() {
@@ -32,6 +33,13 @@ class PhotoDetailsFragment : Fragment() {
     }
 
     private fun setupView() {
-        binding.photoTextView.text = args.photo.toString()
+        val photo = args.photo
+        binding.photoNameLabel.text = photo.name
+        binding.photoDescriptionLabel.text= photo.description
+        binding.photoAuthorLabel.text = "${photo.author.firstname} ${photo.author.lastname}"
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+        if (photo.author.id == userId) {
+            binding.editPhotoButton.visibility = View.VISIBLE
+        }
     }
 }

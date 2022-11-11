@@ -5,25 +5,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.yurykasper.photomap.databinding.ItemTimelineBinding
-import com.yurykasper.photomap.models.PhotoDTO
+import com.yurykasper.photomap.models.photo.PhotoDVO
 
 interface RecyclerOnTouchListener {
-    fun onPhotoDetails(photo: PhotoDTO)
+    fun onPhotoDetails(photo: PhotoDVO)
 }
 
 class TimelineAdapter(
     private val recyclerListener: RecyclerOnTouchListener
 ): RecyclerView.Adapter<TimelineAdapter.TimelineViewHolder>(), View.OnClickListener {
 
-    private var timelineItems: List<PhotoDTO> = emptyList()
+    private var timelineItems: List<PhotoDVO> = emptyList()
 
-    fun refresh(list: List<PhotoDTO>) {
+    fun refresh(list: List<PhotoDVO>) {
         timelineItems = list
         notifyDataSetChanged()
     }
 
     override fun onClick(v: View) {
-        val photoDTO = v.tag as PhotoDTO
+        val photoDTO = v.tag as PhotoDVO
         recyclerListener.onPhotoDetails(photoDTO)
     }
 
@@ -40,10 +40,10 @@ class TimelineAdapter(
         val item = timelineItems[position]
         with(holder.binding) {
             holder.itemView.tag = item
-            categoryLabel.text = item.category
+            categoryLabel.text = item.category.name
             nameLabel.text = item.name
             descriptionLabel.text = item.description
-            authorLabel.text = item.authorId
+            authorLabel.text = "${item.author.firstname} ${item.author.lastname}"
         }
     }
 
