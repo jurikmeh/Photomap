@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.auth.FirebaseAuth
 import com.yurykasper.photomap.databinding.FragmentPhotoDetailsBinding
+import com.yurykasper.photomap.models.photo.PhotoDVO
 
 class PhotoDetailsFragment : Fragment() {
 
@@ -34,12 +36,17 @@ class PhotoDetailsFragment : Fragment() {
 
     private fun setupView() {
         val photo = args.photo
-        binding.photoNameLabel.text = photo.name
+        binding.photoNameLabel.text = photo.title
         binding.photoDescriptionLabel.text= photo.description
         binding.photoAuthorLabel.text = "${photo.author.firstname} ${photo.author.lastname}"
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
         if (photo.author.id == userId) {
             binding.editPhotoButton.visibility = View.VISIBLE
+        }
+
+        binding.editPhotoButton.setOnClickListener {
+            val direction = PhotoDetailsFragmentDirections.actionPhotoDetailsFragmentToEditPhotoDetailsFragment(args.photo)
+            findNavController().navigate(direction)
         }
     }
 }

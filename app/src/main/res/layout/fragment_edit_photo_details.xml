@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.editPhotoDetails.EditPhotoDetailsFragment">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:text="Image Picker View"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/photoTitleTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Title"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/photoTitleInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:lines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/photoDescriptionTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Description"
+        app:layout_constraintEnd_toEndOf="@+id/photoTitleTextInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/photoTitleTextInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/photoTitleTextInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/photoDescriptionInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:maxLines="3"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/typeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="16dp"
+        android:text="Type"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/photoDescriptionTextInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/photoDescriptionTextInputLayout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/typeDropDownTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Select type"
+        app:layout_constraintEnd_toEndOf="@+id/photoDescriptionTextInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/typeLabel"
+        app:layout_constraintTop_toBottomOf="@+id/typeLabel">
+
+        <AutoCompleteTextView
+            android:id="@+id/typeDropDownInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/locationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="16dp"
+        android:foregroundTint="@color/black"
+        android:text="Location"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/typeDropDownTextInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/typeDropDownTextInputLayout" />
+
+    <TextView
+        android:id="@+id/coordinatesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Not selected"
+        app:layout_constraintStart_toStartOf="@+id/locationLabel"
+        app:layout_constraintTop_toBottomOf="@+id/locationLabel" />
+
+    <Button
+        android:id="@+id/selectLocationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#00E676"
+        android:text="Select"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/coordinatesLabel"
+        app:layout_constraintEnd_toEndOf="@+id/typeDropDownTextInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/typeDropDownTextInputLayout" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="25dp"
+        android:backgroundTint="#00E676"
+        android:text="Save"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,8 +40,8 @@ class TimelineAdapter(
         val item = timelineItems[position]
         with(holder.binding) {
             holder.itemView.tag = item
-            categoryLabel.text = item.category.name
-            nameLabel.text = item.name
+            categoryLabel.text = item.category.title
+            nameLabel.text = item.title
             descriptionLabel.text = item.description
             authorLabel.text = "${item.author.firstname} ${item.author.lastname}"
         }

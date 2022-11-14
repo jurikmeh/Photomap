@@ -7,7 +7,7 @@ import com.google.firebase.firestore.GeoPoint
 
 data class PhotoDVO(
     val id: String,
-    val name: String,
+    val title: String,
     val description: String,
     val category: CategoryDTO,
     val addingDate: Timestamp,

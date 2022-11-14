@@ -5,7 +5,7 @@ import com.google.firebase.firestore.GeoPoint
 
 data class PhotoDTO(
     val uid: String,
-    val name: String,
+    val title: String,
     val description: String,
     val category: String,
     val addingDate: Timestamp,

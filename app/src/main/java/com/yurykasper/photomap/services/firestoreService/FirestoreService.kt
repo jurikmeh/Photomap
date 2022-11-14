@@ -28,7 +28,7 @@ class FirestoreService: FirestoreServiceType {
                     val categories = documents.map {
                         return@map CategoryDTO(
                             it.id,
-                            it.data?.getValue(categoryNamePropertyKey) as String
+                            it.data?.getValue(categoryTitlePropertyKey) as String
                         )
                     }
                     println(categories)
@@ -48,7 +48,7 @@ class FirestoreService: FirestoreServiceType {
 
                         return@map PhotoDVO(
                             photoDTO.uid,
-                            photoDTO.name,
+                            photoDTO.title,
                             photoDTO.description,
                             categoryDTO,
                             photoDTO.addingDate,
@@ -74,7 +74,7 @@ class FirestoreService: FirestoreServiceType {
                     val photoDTOList = documents.map {
                         return@map PhotoDTO(
                             it.id,
-                            it.data?.getValue(photoNamePropertyKey) as String,
+                            it.data?.getValue(photoTitlePropertyKey) as String,
                             it.data?.getValue(photoDescriptionPropertyKey) as String,
                             it.data?.getValue(photoCategotyPropertyKey) as String,
                             it.data?.getValue(photoAddingDatePropertyKey) as Timestamp,
@@ -115,10 +115,10 @@ class FirestoreService: FirestoreServiceType {
     // Keys
     companion object {
         // Category Property Keys
-        val categoryNamePropertyKey = "name"
+        val categoryTitlePropertyKey = "title"
 
         // Photo Property Keys
-        val photoNamePropertyKey = "name"
+        val photoTitlePropertyKey = "title"
         val photoDescriptionPropertyKey = "description"
         val photoCategotyPropertyKey = "category"
         val photoAddingDatePropertyKey = "addingDate"
