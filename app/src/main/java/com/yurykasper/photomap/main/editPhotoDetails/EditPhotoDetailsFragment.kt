@@ -13,6 +13,7 @@ import com.yurykasper.photomap.databinding.FragmentEditPhotoDetailsBinding
 class EditPhotoDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentEditPhotoDetailsBinding
+    private lateinit var viewModel: EditPhotoDetailsViewModel
     private val args: EditPhotoDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -24,6 +25,8 @@ class EditPhotoDetailsFragment : Fragment() {
         val list = listOf("iOS", "Android", "Flutter")
         val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_type_item, list)
         binding.typeDropDownInputEditText.setAdapter(adapter)
+
+        viewModel = EditPhotoDetailsViewModel(args.photo)
 
         return binding.root
     }
@@ -39,6 +42,10 @@ class EditPhotoDetailsFragment : Fragment() {
             binding.photoTitleInputEditText.setText(photo.title)
             binding.photoDescriptionInputEditText.setText(photo.description)
             binding.typeDropDownInputEditText.setText(photo.category.title)
+        }
+
+        binding.saveButton.setOnClickListener {
+            viewModel.saveChanges()
         }
     }
 

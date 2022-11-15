@@ -10,6 +10,8 @@ import com.yurykasper.photomap.models.photo.PhotoDVO
 import com.yurykasper.photomap.models.category.CategoryDTO
 import com.yurykasper.photomap.models.user.UserDTO
 import io.reactivex.Observable
+import io.reactivex.Single
+
 class FirestoreService: FirestoreServiceType {
 
     private val currentUserUid: String?
@@ -31,10 +33,28 @@ class FirestoreService: FirestoreServiceType {
                             it.data?.getValue(categoryTitlePropertyKey) as String
                         )
                     }
-                    println(categories)
                 observer.onNext(categories)
             }
                 .addOnFailureListener { observer.onNext(emptyList()) }
+        }
+    }
+
+    override fun updatePhotoInformationWith(photo: PhotoDVO): Single<Boolean> {
+        return Single.create<Boolean> { single ->
+            val photoCollectionReference = db.collection(photosCollectionPath)
+            val photoDocumentReference = photoCollectionReference.document(photo.id)
+
+            val updatedValues = mutableMapOf<String, Any>()
+            updatedValues.put(photoAddingDatePropertyKey, photo.addingDate)
+            updatedValues.put(photoAuthorIdPropertyKey, photo.author.uid)
+            updatedValues.put(categoryTitlePropertyKey, photo.category.uid)
+            updatedValues.put(photoDescriptionPropertyKey, photo.description)
+            updatedValues.put(photoLocationPropertyKey, photo.location)
+            updatedValues.put(photoTitlePropertyKey, photo.title)
+            updatedValues.put(photoPhotosPropertyKey, photo.photoURLs)
+
+            photoDocumentReference.update(updatedValues)
+                .addOnSuccessListener { single.onSuccess(true) }
         }
     }
 
@@ -44,7 +64,7 @@ class FirestoreService: FirestoreServiceType {
                 return@flatMap getUserDTOList().map { userDTOList ->
                     return@map photoDTOList.map { photoDTO ->
                         val categoryDTO = categoriesDTOList.filter { it.uid == photoDTO.category }[0]
-                        val userDTO = userDTOList.filter { it.id == photoDTO.authorId }[0]
+                        val userDTO = userDTOList.filter { it.uid == photoDTO.authorId }[0]
 
                         return@map PhotoDVO(
                             photoDTO.uid,
@@ -120,7 +140,7 @@ class FirestoreService: FirestoreServiceType {
         // Photo Property Keys
         val photoTitlePropertyKey = "title"
         val photoDescriptionPropertyKey = "description"
-        val photoCategotyPropertyKey = "category"
+        val photoCategotyPropertyKey = "categoryId"
         val photoAddingDatePropertyKey = "addingDate"
         val photoAuthorIdPropertyKey = "authorId"
         val photoPhotosPropertyKey = "photos"

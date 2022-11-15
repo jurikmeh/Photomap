@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.auth.FirebaseAuth
 import com.yurykasper.photomap.databinding.FragmentPhotoDetailsBinding
-import com.yurykasper.photomap.models.photo.PhotoDVO
 
 class PhotoDetailsFragment : Fragment() {
 
@@ -40,7 +39,7 @@ class PhotoDetailsFragment : Fragment() {
         binding.photoDescriptionLabel.text= photo.description
         binding.photoAuthorLabel.text = "${photo.author.firstname} ${photo.author.lastname}"
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-        if (photo.author.id == userId) {
+        if (photo.author.uid == userId) {
             binding.editPhotoButton.visibility = View.VISIBLE
         }
 

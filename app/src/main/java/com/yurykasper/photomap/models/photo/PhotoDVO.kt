@@ -7,11 +7,11 @@ import com.google.firebase.firestore.GeoPoint
 
 data class PhotoDVO(
     val id: String,
-    val title: String,
-    val description: String,
-    val category: CategoryDTO,
+    var title: String,
+    var description: String,
+    var category: CategoryDTO,
     val addingDate: Timestamp,
     val author: UserDTO,
-    val photoURLs: List<String>,
-    val location: GeoPoint
+    var photoURLs: List<String>,
+    var location: GeoPoint
 ): java.io.Serializable
