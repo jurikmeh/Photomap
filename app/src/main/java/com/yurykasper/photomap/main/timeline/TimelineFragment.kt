@@ -32,10 +32,7 @@ class TimelineFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-
-        viewModel.photosDVOList.subscribeBy {
-            adapter.refresh(it)
-        }.addTo(disposables)
+        setupBindings()
     }
 
     companion object {
@@ -53,5 +50,16 @@ class TimelineFragment : Fragment() {
 
         timelineRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         timelineRecyclerView.adapter = adapter
+    }
+
+    private fun setupBindings() {
+        viewModel.photosDVOList.subscribeBy {
+            adapter.refresh(it)
+        }.addTo(disposables)
+
+        binding.addButton.setOnClickListener {
+            val direction = TimelineFragmentDirections.actionTimelineFragmentToEditPhotoDetailsFragment(null)
+            findNavController().navigate(direction)
+        }
     }
 }

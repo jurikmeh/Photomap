@@ -1,10 +1,10 @@
 package com.yurykasper.photomap.services.firestoreService
 
-import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.GeoPoint
+import com.yurykasper.photomap.main.editPhotoDetails.PhotoSaveState
 import com.yurykasper.photomap.models.photo.PhotoDTO
 import com.yurykasper.photomap.models.photo.PhotoDVO
 import com.yurykasper.photomap.models.category.CategoryDTO
@@ -13,9 +13,6 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 class FirestoreService: FirestoreServiceType {
-
-    private val currentUserUid: String?
-        get () = FirebaseAuth.getInstance().uid
 
     private val db = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
@@ -39,22 +36,27 @@ class FirestoreService: FirestoreServiceType {
         }
     }
 
-    override fun updatePhotoInformationWith(photo: PhotoDVO): Single<Boolean> {
-        return Single.create<Boolean> { single ->
+    override fun savePhotoInformation(photo: PhotoDVO): Single<PhotoSaveState> {
+        return Single.create<PhotoSaveState> { single ->
             val photoCollectionReference = db.collection(photosCollectionPath)
-            val photoDocumentReference = photoCollectionReference.document(photo.id)
 
-            val updatedValues = mutableMapOf<String, Any>()
-            updatedValues.put(photoAddingDatePropertyKey, photo.addingDate)
-            updatedValues.put(photoAuthorIdPropertyKey, photo.author.uid)
-            updatedValues.put(categoryTitlePropertyKey, photo.category.uid)
-            updatedValues.put(photoDescriptionPropertyKey, photo.description)
-            updatedValues.put(photoLocationPropertyKey, photo.location)
-            updatedValues.put(photoTitlePropertyKey, photo.title)
-            updatedValues.put(photoPhotosPropertyKey, photo.photoURLs)
+            val photoInfo = mutableMapOf<String, Any>()
+            photoInfo.put(photoAddingDatePropertyKey, photo.addingDate)
+            photoInfo.put(photoAuthorIdPropertyKey, photo.author.uid)
+            photoInfo.put(photoCategotyPropertyKey, photo.category.uid)
+            photoInfo.put(photoDescriptionPropertyKey, photo.description)
+            photoInfo.put(photoLocationPropertyKey, photo.location)
+            photoInfo.put(photoTitlePropertyKey, photo.title)
+            photoInfo.put(photoPhotosPropertyKey, photo.photoURLs)
 
-            photoDocumentReference.update(updatedValues)
-                .addOnSuccessListener { single.onSuccess(true) }
+            if (photo.id.isEmpty()) {
+                photoCollectionReference.add(photoInfo)
+                    .addOnSuccessListener { single.onSuccess(PhotoSaveState.CREATE) }
+            } else {
+                val photoDocumentReference = photoCollectionReference.document(photo.id)
+                photoDocumentReference.update(photoInfo)
+                    .addOnSuccessListener { single.onSuccess(PhotoSaveState.EDIT) }
+            }
         }
     }
 
@@ -133,11 +135,12 @@ class FirestoreService: FirestoreServiceType {
     }
 
     // Keys
+
     companion object {
-        // Category Property Keys
+        // Category Properties
         val categoryTitlePropertyKey = "title"
 
-        // Photo Property Keys
+        // Photo Properties
         val photoTitlePropertyKey = "title"
         val photoDescriptionPropertyKey = "description"
         val photoCategotyPropertyKey = "categoryId"
@@ -146,7 +149,7 @@ class FirestoreService: FirestoreServiceType {
         val photoPhotosPropertyKey = "photos"
         val photoLocationPropertyKey = "location"
 
-        // User Property Keys
+        // User Properties
         val userEmailPropertyKey = "email"
         val userFirstnamePropertyKey = "firstname"
         val userLastnamePropertyKey = "lastname"

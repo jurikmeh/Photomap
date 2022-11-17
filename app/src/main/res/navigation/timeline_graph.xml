@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_timelineFragment_to_photoDetailsFragment"
             app:destination="@id/photoDetailsFragment" />
+        <action
+            android:id="@+id/action_timelineFragment_to_editPhotoDetailsFragment"
+            app:destination="@id/editPhotoDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/photoDetailsFragment"
