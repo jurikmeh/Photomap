@@ -36,7 +36,7 @@ class PhotoDetailsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.inputs.getPhotoDetails(args.photo.id)
+        viewModel.inputs.getPhotoDetails(args.photoId)
     }
 
     companion object {
@@ -57,7 +57,7 @@ class PhotoDetailsFragment : Fragment() {
             }.addTo(disposables)
 
         binding.editPhotoButton.setOnClickListener {
-            val direction = PhotoDetailsFragmentDirections.actionPhotoDetailsFragmentToEditPhotoDetailsFragment(args.photo)
+            val direction = PhotoDetailsFragmentDirections.actionPhotoDetailsFragmentToEditPhotoDetailsFragment(viewModel.outputs.photoDetails.value)
             findNavController().navigate(direction)
         }
     }

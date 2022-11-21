@@ -42,8 +42,8 @@ class TimelineFragment : Fragment() {
 
     private fun setupRecyclerView() = with(binding) {
         adapter = TimelineAdapter(object: RecyclerOnTouchListener {
-            override fun onPhotoDetails(photo: PhotoDVO) {
-                val direction = TimelineFragmentDirections.actionTimelineFragmentToPhotoDetailsFragment(photo)
+            override fun onPhotoDetails(photoId: String) {
+                val direction = TimelineFragmentDirections.actionTimelineFragmentToPhotoDetailsFragment(photoId)
                 findNavController().navigate(direction)
             }
         })

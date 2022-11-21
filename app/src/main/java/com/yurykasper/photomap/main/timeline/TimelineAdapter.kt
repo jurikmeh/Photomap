@@ -8,7 +8,7 @@ import com.yurykasper.photomap.databinding.ItemTimelineBinding
 import com.yurykasper.photomap.models.photo.PhotoDVO
 
 interface RecyclerOnTouchListener {
-    fun onPhotoDetails(photo: PhotoDVO)
+    fun onPhotoDetails(photoId: String)
 }
 
 class TimelineAdapter(
@@ -24,7 +24,7 @@ class TimelineAdapter(
 
     override fun onClick(v: View) {
         val photoDTO = v.tag as PhotoDVO
-        recyclerListener.onPhotoDetails(photoDTO)
+        recyclerListener.onPhotoDetails(photoDTO.id)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimelineViewHolder {

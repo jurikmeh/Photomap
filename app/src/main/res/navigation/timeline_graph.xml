@@ -22,12 +22,12 @@
         android:name="com.yurykasper.photomap.main.photoDetails.PhotoDetailsFragment"
         android:label="fragment_photo_details"
         tools:layout="@layout/fragment_photo_details" >
-        <argument
-            android:name="photo"
-            app:argType="com.yurykasper.photomap.models.photo.PhotoDVO" />
         <action
             android:id="@+id/action_photoDetailsFragment_to_editPhotoDetailsFragment"
             app:destination="@id/editPhotoDetailsFragment" />
+        <argument
+            android:name="photoId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/editPhotoDetailsFragment"
