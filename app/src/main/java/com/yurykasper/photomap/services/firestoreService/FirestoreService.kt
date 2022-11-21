@@ -84,9 +84,84 @@ class FirestoreService: FirestoreServiceType {
         }
     }
 
+    override fun getPhotoWith(id: String): Observable<PhotoDVO> {
+        return getPhotoDTOWith(id)
+            .flatMap { photoDTO ->
+                val authorId = photoDTO.authorId
+                val categoryId = photoDTO.category
+
+                return@flatMap Observable.zip(getUserWith(authorId), getCategoryWith(categoryId), { user, category ->
+                    PhotoDVO(
+                        id,
+                        photoDTO.title,
+                        photoDTO.description,
+                        category,
+                        photoDTO.addingDate,
+                        user,
+                        photoDTO.photoURLs,
+                        photoDTO.location
+                    )
+                })
+            }
+    }
+
     // MARK: - Helpers
 
-     fun getPhotoDTOList(): Observable<List<PhotoDTO>> {
+    private fun getCategoryWith(id: String): Observable<CategoryDTO> {
+        return Observable.create<CategoryDTO> { observer ->
+            val categoryReference = db.collection(categoriesCollectionPath).document(id)
+
+            categoryReference.get()
+                .addOnSuccessListener {
+                    val category = CategoryDTO(
+                        id,
+                        it.data?.getValue(categoryTitlePropertyKey) as String
+                    )
+                    observer.onNext(category)
+                }
+        }
+    }
+
+    private fun getUserWith(id: String): Observable<UserDTO> {
+        return Observable.create<UserDTO> { observer ->
+            val userReference = db.collection(usersCollectionPath).document(id)
+
+            userReference.get()
+                .addOnSuccessListener {
+                    val user = UserDTO(
+                        id,
+                        it.data?.getValue(userEmailPropertyKey) as String,
+                        it.data?.getValue(userFirstnamePropertyKey) as String,
+                        it.data?.getValue(userLastnamePropertyKey) as String,
+                        it.data?.getValue(userPhonePropertyKey) as String
+                    )
+                    observer.onNext(user)
+                }
+        }
+    }
+
+    private fun getPhotoDTOWith(id: String): Observable<PhotoDTO> {
+        return Observable.create<PhotoDTO> { observer ->
+            val photoReference = db.collection(photosCollectionPath).document(id)
+
+            photoReference.get()
+                .addOnSuccessListener {
+                    val photoDTO = PhotoDTO(
+                        id,
+                        it.data?.getValue(photoTitlePropertyKey) as String,
+                        it.data?.getValue(photoDescriptionPropertyKey) as String,
+                        it.data?.getValue(photoCategotyPropertyKey) as String,
+                        it.data?.getValue(photoAddingDatePropertyKey) as Timestamp,
+                        it.data?.getValue(photoAuthorIdPropertyKey) as String,
+                        it.data?.getValue(photoPhotosPropertyKey) as List<String>,
+                        it.data?.getValue(photoLocationPropertyKey) as GeoPoint
+                    )
+                    observer.onNext(photoDTO)
+                }
+        }
+    }
+
+     private fun getPhotoDTOList(): Observable<List<PhotoDTO>> {
         return Observable.create<List<PhotoDTO>> { observer ->
             val photosReference = db.collection(photosCollectionPath)
 
@@ -111,7 +186,7 @@ class FirestoreService: FirestoreServiceType {
         }
     }
 
-    fun getUserDTOList(): Observable<List<UserDTO>> {
+    private fun getUserDTOList(): Observable<List<UserDTO>> {
         return  Observable.create<List<UserDTO>> { observer ->
             val usersReference = db.collection(usersCollectionPath)
 

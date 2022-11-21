@@ -10,5 +10,7 @@ interface FirestoreServiceType {
     fun getCategories(): Observable<List<CategoryDTO>>
     fun getPhotos(): Observable<List<PhotoDVO>>
 
+    fun getPhotoWith(id: String): Observable<PhotoDVO>
+
     fun savePhotoInformation(photo: PhotoDVO): Single<PhotoSaveState>
 }

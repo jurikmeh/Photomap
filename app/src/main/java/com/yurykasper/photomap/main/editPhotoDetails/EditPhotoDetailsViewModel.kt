@@ -26,7 +26,7 @@ class EditPhotoDetailsViewModel(val photoDVO: PhotoDVO?): EditPhotoDetailsViewMo
     private val descriptionSubject = BehaviorSubject.createDefault(photoDVO?.description ?: "")
     override fun descriptionChanged(text: String) = descriptionSubject.onNext(text)
 
-    private val categorySubject: BehaviorSubject<CategoryDTO> = BehaviorSubject.create()
+    private val categorySubject: BehaviorSubject<CategoryDTO>
     override fun categoryChanged(index: Int) {
         val categoriesList = categories.value ?: emptyList()
         categorySubject.onNext(categoriesList.get(index))
@@ -80,6 +80,12 @@ class EditPhotoDetailsViewModel(val photoDVO: PhotoDVO?): EditPhotoDetailsViewMo
     override val categories: BehaviorSubject<List<CategoryDTO>> = BehaviorSubject.createDefault(emptyList())
 
     init {
+        if (photoDVO?.category != null) {
+            categorySubject = BehaviorSubject.createDefault(photoDVO.category)
+        } else {
+            categorySubject = BehaviorSubject.create()
+        }
+
         Observables.combineLatest(titleSubject, descriptionSubject, categorySubject)
             .map { t -> t.first.isNotEmpty() && t.second.isNotEmpty() && t.third.title.isNotEmpty() }
             .subscribe(saveButtonEnabled)
