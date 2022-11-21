@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/timelineFragment"
         android:name="com.yurykasper.photomap.main.timeline.TimelineFragment"
-        android:label="fragment_timeline"
-        tools:layout="@layout/fragment_timeline" >
+        android:label="@string/timeline"
+        tools:layout="@layout/fragment_timeline">
         <action
             android:id="@+id/action_timelineFragment_to_photoDetailsFragment"
             app:destination="@id/photoDetailsFragment" />
