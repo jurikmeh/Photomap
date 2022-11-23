@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import com.yurykasper.photomap.databinding.ItemTimelineBinding
 import com.yurykasper.photomap.models.photo.PhotoDVO
 
@@ -44,6 +45,7 @@ class TimelineAdapter(
             nameLabel.text = item.title
             descriptionLabel.text = item.description
             authorLabel.text = "${item.author.firstname} ${item.author.lastname}"
+            Picasso.get().load(item.photoURLs[0]).into(photoImageView)
         }
     }
 

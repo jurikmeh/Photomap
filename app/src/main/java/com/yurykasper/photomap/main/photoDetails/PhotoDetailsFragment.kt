@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import com.yurykasper.photomap.databinding.FragmentPhotoDetailsBinding
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -50,6 +51,7 @@ class PhotoDetailsFragment : Fragment() {
                 binding.photoNameLabel.text = photo.title
                 binding.photoDescriptionLabel.text= photo.description
                 binding.photoAuthorLabel.text = "${photo.author.firstname} ${photo.author.lastname}"
+                Picasso.get().load(photo.photoURLs[0]).into(binding.photoImageView)
                 val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
                 if (photo.author.uid == userId) {
                     binding.editPhotoButton.visibility = View.VISIBLE

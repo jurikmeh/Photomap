@@ -21,9 +21,9 @@
             android:layout_width="500dp"
             android:layout_height="300dp"
             android:background="#7C4DFF"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/ic_launcher_foreground"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
